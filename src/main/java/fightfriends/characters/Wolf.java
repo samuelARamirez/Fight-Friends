@@ -1,8 +1,16 @@
 package fightfriends.characters;
 
 public class Wolf extends Friend {
+    public static final double BASE_HEALTH = 90.0;
+    public static final double BASE_ATTACK = 14.0;
+    public static final double BASE_SPEED = 8.0;
+
     public Wolf(String name) {
-        super(name);
+        this(name, BASE_HEALTH, BASE_ATTACK, BASE_SPEED);
+    }
+
+    public Wolf(String name, double health, double attack, double speed) {
+        super(name, health, attack, speed);
     }
 
     @Override

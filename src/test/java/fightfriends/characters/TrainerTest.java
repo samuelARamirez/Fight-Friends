@@ -21,8 +21,8 @@ class TrainerTest {
     @Test
     void carriesDistinctFriendsWithoutRepeatingAnInstance() {
         Trainer trainer = new Trainer("Sam");
-        Friend fox = new Fox("Ember");
-        Friend otherFox = new Fox("Ember");
+        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
+        Friend otherFox = new Fox("Ember", 100.0, 10.0, 5.0);
         trainer.addFriend(fox);
         trainer.addFriend(otherFox);
         trainer.addFriend(fox);
@@ -32,9 +32,9 @@ class TrainerTest {
     @Test
     void removesOnlyFriendsThatArePresent() {
         Trainer trainer = new Trainer("Sam");
-        Friend fox = new Fox("Ember");
+        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
         trainer.addFriend(fox);
-        assertFalse(trainer.removeFriend(new Bear("Bear")));
+        assertFalse(trainer.removeFriend(new Bear("Bear", 100.0, 10.0, 5.0)));
         assertTrue(trainer.removeFriend(fox));
         assertFalse(trainer.removeFriend(fox));
         assertTrue(trainer.getFriends().isEmpty());
@@ -59,7 +59,7 @@ class TrainerTest {
     @Test
     void returnsImmutableSnapshots() {
         Trainer trainer = new Trainer("Sam");
-        Friend fox = new Fox("Ember");
+        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
         Area forest = new Forest("Woods");
         trainer.addFriend(fox);
         trainer.visitArea(forest);

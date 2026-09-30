@@ -56,8 +56,10 @@ Add a scenario to `gamePlay.feature` and implement its steps in
 - `Trainer` tracks carried friends with `addFriend`, `removeFriend`, and
   `getFriends`, and visited areas with `visitArea`, `hasVisited`, and
   `getVisitedAreas`.
-- Abstract `Friend` holds a name and declares `getSpecies()`. `Wolf`, `Bear`,
-  and `Fox` provide the first animal implementations.
+- Abstract `Friend` holds a name, health, attack, and speed and declares `getSpecies()`.
+  Animal constructors accept a name for base stats or `(name, health, attack, speed)` for custom stats; each stat has a getter
+  and setter inherited from `Friend`. `Wolf`, `Bear`,
+  `Fox`, and `Elephant` provide the animal implementations.
 - Abstract `Area` holds a name and declares `getBiome()`. `Forest`, `Desert`,
   and `Tundra` provide the first biome implementations.
 
@@ -76,3 +78,17 @@ and the starter application's logged output.
 Run `./gradlew clean build` to run all tests and enforce 100% method coverage
 for every production class with JaCoCo. `./gradlew test` also generates an HTML
 coverage report at `build/reports/jacoco/test/html/index.html`.
+
+## Animal base stats
+
+| Animal | Health | Attack | Speed | Role |
+| --- | ---: | ---: | ---: | --- |
+| Elephant | 180 | 8 | 2 | Durable, slow, low damage |
+| Fox | 70 | 8 | 10 | Fast, fragile, low damage |
+| Bear | 120 | 12 | 5 | Moderate damage and speed, sturdy |
+| Wolf | 90 | 14 | 8 | Fast attacker with less health |
+
+Use `new Fox("Ember")` for the species defaults. Public `BASE_HEALTH`,
+`BASE_ATTACK`, and `BASE_SPEED` constants live in each animal class.
+Custom constructors and inherited setters still allow individual stats.
+These are starting values for playtesting; combat rules will determine balance.
