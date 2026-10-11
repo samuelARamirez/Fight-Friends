@@ -1,4 +1,4 @@
-package fightfriends.characters;
+package fightfriends.friends;
 
 public class Wolf extends Friend {
     public static final double BASE_HEALTH = 90.0;
