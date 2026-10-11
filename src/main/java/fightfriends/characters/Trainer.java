@@ -2,14 +2,20 @@ package fightfriends.characters;
 
 import fightfriends.friends.Friend;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Trainer extends Character {
     private List<Friend> friends;
     private double healthPoints;
     private int maxNumFriends;
-    private static final double DEFAULT_HP = 10.0;
-    private static final int DEFAULT_MAX_NUM_FRIENDS = 3;
+
+    protected static final double DEFAULT_HP = 10.0;
+    protected static final int DEFAULT_MAX_NUM_FRIENDS = 3;
+
+    public Trainer(String name){
+        this(name, DEFAULT_HP, new ArrayList<>(DEFAULT_MAX_NUM_FRIENDS), DEFAULT_MAX_NUM_FRIENDS);
+    }
 
     public Trainer(String name, double healthPoints, List<Friend> friends, int maxNumFriends) {
         super(name);

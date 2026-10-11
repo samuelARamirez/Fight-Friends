@@ -8,6 +8,7 @@ import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,18 @@ public class Player extends Trainer{
     private final List<Artifact> backpack;
     private double goldBalance;
 
+    private static final int DEFAULT_MAX_NUM_ARTIFACTS = 5;
+    private static final double DEFAULT_INITIAL_BALANCE = 100.0;
+
+    public Player(String name){
+        this(name,
+            DEFAULT_HP,
+            new ArrayList<>(DEFAULT_MAX_NUM_FRIENDS),
+            DEFAULT_MAX_NUM_FRIENDS,
+            DEFAULT_MAX_NUM_ARTIFACTS,
+            new ArrayList<>(DEFAULT_MAX_NUM_ARTIFACTS),
+            DEFAULT_INITIAL_BALANCE);
+    }
 
     public Player(String name, double health_points, List<Friend> friends, int maxNumFriends, int maxNumArtifacts, List<Artifact> backpack, double goldBalance){
         super(name, health_points, friends, maxNumFriends);
@@ -47,6 +60,10 @@ public class Player extends Trainer{
 
     private boolean backpackHasRoom(){
         return backpack.size() < maxNumArtifacts;
+    }
+
+    public void increaseBackpackSpace(int nNewSlots){
+        maxNumArtifacts += nNewSlots;
     }
 
     /**
@@ -87,7 +104,7 @@ public class Player extends Trainer{
         }else{
             merchant.returnItem(purchasedItem, itemPrice);
             logger.info("Could not purchase "+purchasedItem.getName()+" because backpack is too small");
-            //TODO: add in a choice of returning the item, using the item, or dropping/consuming something out of the backpack
+            //TODO: add in a choice of returning the item, using the item, purchasing more backpack spae, or dropping/consuming something out of the backpack
             return false;
         }
     }

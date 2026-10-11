@@ -2,12 +2,17 @@ package fightfriends.characters;
 
 import fightfriends.Collectible;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class Merchant extends Character{
     private final Map<Collectible, Double> itemsForSale;
+
+    public Merchant(String name){
+        this(name, new HashMap<>());
+    }
 
     public Merchant(String name, Map<Collectible, Double> itemsForSale){
         super(name);
