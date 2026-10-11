@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Merchant extends Character{
-    private Map<Collectible, Double> itemsForSale;
+    private final Map<Collectible, Double> itemsForSale;
 
     public Merchant(String name, Map<Collectible, Double> itemsForSale){
         super(name);
