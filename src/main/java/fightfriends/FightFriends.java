@@ -1,7 +1,7 @@
 package fightfriends;
 
 import fightfriends.areas.Forest;
-import fightfriends.characters.Fox;
+import fightfriends.friends.Fox;
 import fightfriends.characters.Trainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
