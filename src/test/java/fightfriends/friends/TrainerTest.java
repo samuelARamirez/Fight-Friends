@@ -1,8 +1,9 @@
-package fightfriends.characters;
+package fightfriends.friends;
 
 import fightfriends.areas.Area;
 import fightfriends.areas.Forest;
 import fightfriends.areas.Desert;
+import fightfriends.characters.Trainer;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
