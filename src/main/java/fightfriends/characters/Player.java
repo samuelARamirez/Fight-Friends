@@ -82,9 +82,12 @@ public class Player extends Trainer{
         if(pickup(purchasedItem)){
             // added to backpack successfully
             this.spendMoney(itemPrice);
+            logger.info("Purchased "+ purchasedItem.getName()+" for "+itemPrice);
             return true;
         }else{
             merchant.returnItem(purchasedItem, itemPrice);
+            logger.info("Could not purchase "+purchasedItem.getName()+" because backpack is too small");
+            //TODO: add in a choice of returning the item, using the item, or dropping/consuming something out of the backpack
             return false;
         }
     }
