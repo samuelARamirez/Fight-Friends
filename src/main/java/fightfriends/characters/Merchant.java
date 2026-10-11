@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Merchant {
-    private String name;
+public class Merchant extends Character{
     private Map<Collectible, Double> itemsForSale;
+
     public Merchant(String name, Map<Collectible, Double> itemsForSale){
-        this.name = name;
+        super(name);
         this.itemsForSale = itemsForSale;
     }
 
@@ -38,6 +38,11 @@ public class Merchant {
 
     public Double askPrice(String name){
         return itemsForSale.get(lookupItemByName(name));
+    }
+
+    @Override
+    public boolean isMerchant() {
+        return true;
     }
 }
 
