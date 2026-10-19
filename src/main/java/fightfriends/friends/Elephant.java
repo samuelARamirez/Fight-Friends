@@ -1,4 +1,4 @@
-package fightfriends.characters;
+package fightfriends.friends;
 
 public class Elephant extends Friend {
     public static final double BASE_HEALTH = 180.0;
