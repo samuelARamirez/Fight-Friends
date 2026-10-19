@@ -1,4 +1,4 @@
-package fightfriends.characters;
+package fightfriends.friends;
 
 import org.junit.jupiter.api.Test;
 

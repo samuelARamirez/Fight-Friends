@@ -1,29 +1,42 @@
 package fightfriends.characters;
 
-import fightfriends.areas.Area;
+import fightfriends.friends.Friend;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-public class Trainer {
-    private final String name;
-    private final List<Friend> friends = new ArrayList<>();
-    private final Set<Area> visitedAreas = new LinkedHashSet<>();
+public class Trainer extends Character {
+    private List<Friend> friends;
+    private double healthPoints;
+    private int maxNumFriends;
 
-    public Trainer(String name) {
-        this.name = name;
+    protected static final double DEFAULT_HP = 10.0;
+    protected static final int DEFAULT_MAX_NUM_FRIENDS = 3;
+
+    public Trainer(String name){
+        this(name, DEFAULT_HP, new ArrayList<>(DEFAULT_MAX_NUM_FRIENDS), DEFAULT_MAX_NUM_FRIENDS);
     }
 
-    public String getName() {
-        return name;
+    public Trainer(String name, double healthPoints, List<Friend> friends, int maxNumFriends) {
+        super(name);
+        this.healthPoints = healthPoints;
+        if(friends.size() > maxNumFriends){
+            this.friends = friends.subList(0, maxNumFriends-1);
+        }else {
+            this.friends = friends;
+        }
+        this.maxNumFriends = maxNumFriends;
     }
+
 
     public void addFriend(Friend friend) {
-        if (!friends.contains(friend)) {
+        if (roomForMoreFriends() && !friends.contains(friend)) {
             friends.add(friend);
         }
+    }
+
+    private boolean roomForMoreFriends() {
+        return friends.size() < maxNumFriends;
     }
 
     public boolean removeFriend(Friend friend) {
@@ -34,16 +47,26 @@ public class Trainer {
         return List.copyOf(friends);
     }
 
-    public void visitArea(Area area) {
-        visitedAreas.add(area);
+    public double getHealthPoints(){
+        return healthPoints;
     }
 
-    public boolean hasVisited(Area area) {
-        return visitedAreas.contains(area);
+    public double loseHealth(double amountLost){
+        healthPoints -= amountLost;
+        if(healthPoints <0){
+            healthPoints = 0;
+        }
+        return healthPoints;
     }
 
-    /** Returns unique areas in the order they were first visited. */
-    public List<Area> getVisitedAreas() {
-        return List.copyOf(visitedAreas);
+    public boolean isAlive(){
+        return healthPoints > 0;
     }
+
+
+    @Override
+    public boolean isTrainer(){
+        return true;
+    }
+
 }

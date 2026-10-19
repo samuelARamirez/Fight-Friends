@@ -1,7 +1,9 @@
-package fightfriends.characters;
+package fightfriends.friends;
+
+import fightfriends.Collectible;
 
 /** Base class for animal friends. Add shared stats and behavior here. */
-public abstract class Friend {
+public abstract class Friend implements Collectible {
     private final String name;
     private double health;
     private double attack;
@@ -43,4 +45,8 @@ public abstract class Friend {
     }
 
     public abstract String getSpecies();
+
+    public double getPower(){
+        return health+attack+speed;
+    }
 }

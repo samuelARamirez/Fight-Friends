@@ -1,16 +1,16 @@
-package fightfriends.characters;
+package fightfriends.friends;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class ElephantTest {
+class WolfTest {
     @Test
     void preservesNameAndIdentifiesType() {
-        Friend subject = new Elephant("Example", 100.0, 10.0, 5.0);
+        Friend subject = new Wolf("Example", 100.0, 10.0, 5.0);
 
         assertEquals("Example", subject.getName());
-        assertEquals("Elephant", subject.getSpecies());
+        assertEquals("Wolf", subject.getSpecies());
         assertEquals(100.0, subject.getHealth());
         assertEquals(10.0, subject.getAttack());
         assertEquals(5.0, subject.getSpeed());
@@ -24,24 +24,24 @@ class ElephantTest {
     }
     @Test
     void startsWithAnimalBaseStats() {
-        Elephant subject = new Elephant("Example");
+        Wolf subject = new Wolf("Example");
         assertEquals("Example", subject.getName());
-        assertEquals("Elephant", subject.getSpecies());
-        assertEquals(180.0, subject.getHealth());
-        assertEquals(8.0, subject.getAttack());
-        assertEquals(2.0, subject.getSpeed());
+        assertEquals("Wolf", subject.getSpecies());
+        assertEquals(90.0, subject.getHealth());
+        assertEquals(14.0, subject.getAttack());
+        assertEquals(8.0, subject.getSpeed());
     }
 
     @Test
     void changingOneFriendDoesNotChangeAnotherOrItsDefaults() {
-        Elephant subject = new Elephant("First");
-        Elephant other = new Elephant("Second");
+        Wolf subject = new Wolf("First");
+        Wolf other = new Wolf("Second");
         subject.setHealth(1.0);
         subject.setAttack(1.0);
         subject.setSpeed(1.0);
-        assertEquals(180.0, other.getHealth());
-        assertEquals(8.0, other.getAttack());
-        assertEquals(2.0, other.getSpeed());
-        assertEquals(180.0, new Elephant("Third").getHealth());
+        assertEquals(90.0, other.getHealth());
+        assertEquals(14.0, other.getAttack());
+        assertEquals(8.0, other.getSpeed());
+        assertEquals(90.0, new Wolf("Third").getHealth());
     }
 }
