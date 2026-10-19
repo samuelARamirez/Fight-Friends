@@ -22,4 +22,8 @@ public class FriendPotion extends Artifact{
     public String toString(){
         return String.format("%s (health:{%.2f}, strength: {%.2f)", this.getName(), healthPoints, strengthPoints);
     }
+
+    public double getPower(){
+        return getHealthPoints()+getStrengthPoints();
+    }
 }

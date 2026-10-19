@@ -45,4 +45,8 @@ public abstract class Friend implements Collectible {
     }
 
     public abstract String getSpecies();
+
+    public double getPower(){
+        return health+attack+speed;
+    }
 }

@@ -16,4 +16,8 @@ public class Food extends Artifact{
     public String toString(){
         return String.format("%s ({%.2f})", this.getName(), nutritionValue);
     }
+
+    public double getPower(){
+        return getNutrition();
+    }
 }
