@@ -51,6 +51,7 @@ public class CharacterFactory {
                 itemForSale = artifactFactory.createPotion();
             }else{
                 //make gold
+                //TODO don't use concrete subclass here, maybe need a CollectibleFactory?
                 itemForSale = new Gold("Gold", rand.nextDouble(MIN_AMT_GOLD, MAX_AMT_GOLD));
             }
             itemsForSale.put(itemForSale, findPrice(itemForSale));
