@@ -4,7 +4,6 @@ import fightfriends.Collectible;
 import fightfriends.areas.Area;
 import fightfriends.artifacts.Artifact;
 import fightfriends.friends.Friend;
-import jdk.jshell.spi.ExecutionControl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,6 +45,14 @@ public class Player extends Trainer{
 
     public boolean hasVisited(Area area) {
         return visitedAreas.contains(area);
+    }
+
+    public double getGoldBalance(){
+        return this.goldBalance;
+    }
+
+    public List<Artifact> getBackpack(){
+        return this.backpack;
     }
 
     /** Returns unique areas in the order they were first visited. */
