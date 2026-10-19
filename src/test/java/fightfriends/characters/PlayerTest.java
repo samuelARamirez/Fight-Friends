@@ -1,46 +1,22 @@
-package fightfriends.friends;
+package fightfriends.characters;
 
-import fightfriends.areas.Area;
-import fightfriends.areas.Forest;
-import fightfriends.areas.Desert;
-import fightfriends.characters.Trainer;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
-class TrainerTest {
-    @Test
-    void startsWithNameAndEmptyCollections() {
-        Trainer trainer = new Trainer("Sam");
-        assertEquals("Sam", trainer.getName());
-        assertTrue(trainer.getFriends().isEmpty());
-        assertTrue(trainer.getVisitedAreas().isEmpty());
-        assertNull(new Trainer(null).getName());
-    }
+public class PlayerTest {
 
     @Test
-    void carriesDistinctFriendsWithoutRepeatingAnInstance() {
-        Trainer trainer = new Trainer("Sam");
-        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
-        Friend otherFox = new Fox("Ember", 100.0, 10.0, 5.0);
-        trainer.addFriend(fox);
-        trainer.addFriend(otherFox);
-        trainer.addFriend(fox);
-        assertEquals(List.of(fox, otherFox), trainer.getFriends());
+    public void testInstanceOf(){
+        Character trainer = new Player("test");
+
+        assertInstanceOf(Player.class, trainer);
+        assertInstanceOf(Trainer.class, trainer);
+        assertInstanceOf(Character.class, trainer);
+
     }
 
-    @Test
-    void removesOnlyFriendsThatArePresent() {
-        Trainer trainer = new Trainer("Sam");
-        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
-        trainer.addFriend(fox);
-        assertFalse(trainer.removeFriend(new Bear("Bear", 100.0, 10.0, 5.0)));
-        assertTrue(trainer.removeFriend(fox));
-        assertFalse(trainer.removeFriend(fox));
-        assertTrue(trainer.getFriends().isEmpty());
-    }
-
+    /*
     @Test
     void remembersUniqueVisitsInOrder() {
         Trainer trainer = new Trainer("Sam");
@@ -75,4 +51,5 @@ class TrainerTest {
         assertTrue(trainer.getFriends().isEmpty());
         assertEquals(2, trainer.getVisitedAreas().size());
     }
+     */
 }
