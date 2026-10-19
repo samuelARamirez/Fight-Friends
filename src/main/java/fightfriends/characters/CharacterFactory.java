@@ -67,12 +67,23 @@ public class CharacterFactory {
     }
 
     public Character createTrainer(){
-        //TODO add in logic to get a random list of friends (porbably more functions need to be involved)
+        //TODO add in logic to get a random list of friends (probably more functions need to be involved)
         return createTrainer(getRandomTrainerName());
     }
 
     public Character createTrainer(String name){
         return new Trainer(name);
+
+    }
+
+    public Character createPlayer(){
+        //TODO this should be looked at to make sure its working
+        return createPlayer(getRandomTrainerName());
+    }
+
+    public Character createPlayer(String name){
+        //TODO probably need to update fields in this function
+        return new Player(name);
 
     }
 
