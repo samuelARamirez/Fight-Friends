@@ -1,7 +1,6 @@
 # Fight Friends
 
-Java project skeleton following the structure of the CSCI 4448 homework assignments.
-Uses the same Gradle wrapper, Logback, JUnit 5, and Cucumber dependencies as HW5.
+Fight Friends is an object-oriented Java game where players explore different biomes, collect animal companions, and battle other trainers. Each animal has unique stats, while merchants offer items to support players along their journey.
 
 ```text
 Fight-Friends/
