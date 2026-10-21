@@ -31,7 +31,7 @@ Fight-Friends/
 
 ## Getting started
 
-Use JDK 17 or newer. Open this folder as a Gradle project in your IDE.
+Use JDK 21 or newer. Open this folder as a Gradle project in your IDE.
 From this folder (use `gradlew.bat` on Windows):
 
 ```sh
@@ -78,6 +78,70 @@ and the starter application's logged output.
 Run `./gradlew clean build` to run all tests and enforce 100% method coverage
 for every production class with JaCoCo. `./gradlew test` also generates an HTML
 coverage report at `build/reports/jacoco/test/html/index.html`.
+
+
+## Mid-project review
+
+### Design patterns — 3 points
+
+#### Factory Pattern
+
+We use `CharacterFactory` and `ArtifactFactory` to create characters and artifacts.
+These factories handle construction and randomized defaults so the rest of the
+game can work with the `Character` and `Artifact` abstractions.
+
+#### Strategy Pattern
+
+We plan to use strategies to control how friends choose actions during combat.
+Each friend will receive a strategy, such as aggressive or defensive, so its
+behavior can change without changing its animal class.
+
+#### Template Pattern
+
+We plan to define a shared fighting sequence in the abstract `Friend` class,
+with steps such as selecting an attack, calculating damage, and applying damage.
+Animal subclasses will customize individual steps while following the same
+overall sequence. Strategies will choose actions within that sequence.
+
+#### Observer Pattern
+
+We plan to publish game events to listeners that update the UI. Separate listeners
+will handle display changes, such as health and inventory, and informational text,
+such as battle messages. This keeps UI updates separate from the game logic.
+
+### Foundational classes and real logic — 3 points
+
+We have implemented the `Character`, `Friend`, `Area`, and `Artifact` abstractions
+and the `Collectible` interface, along with concrete characters, animals, biomes,
+and items. Real logic includes friend capacity and duplicate checks, health loss,
+ordered visit history, randomized artifact creation, and merchant pricing and
+stock management. Item pickup and the full game loop are still in progress.
+
+### Object-oriented principles — 2 points
+
+We code to abstractions: `World` stores `Area` objects, trainers store `Friend`
+objects, and merchants handle `Collectible` items. Pricing uses polymorphism by
+calling `Collectible.getPower()`, with different implementations for food,
+potions, gold, and friends. Constructor injection lets callers supply a merchant's
+inventory and a trainer's friend collection instead of creating them internally.
+
+### Meaningful test cases — 2 points
+
+Existing JUnit tests check at least these five behaviors:
+
+1. `WorldTest.keepsDistinctAreasInInsertionOrderWithoutRepeatingAnInstance`:
+   areas retain insertion order without repeating the same instance.
+2. `WorldTest.returnsAnImmutableSnapshot`: returned area lists cannot change the
+   world, and earlier snapshots remain unchanged.
+3. `TrainerTest.carriesDistinctFriendsWithoutRepeatingAnInstance`: separate
+   friends can be carried without adding the same friend twice.
+4. `PlayerTest.remembersUniqueVisitsInOrder`: visited areas are tracked uniquely
+   in the order first visited.
+5. `FriendTest.updatesStatsIndependently`: changing health, attack, or speed does
+   not change the other stats.
+
+The purchase test also describes the intended trading behavior, but currently
+fails because item pickup is unfinished.
 
 ## Animal base stats
 
