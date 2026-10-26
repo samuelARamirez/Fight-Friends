@@ -15,7 +15,7 @@ public class FightFriends {
     private static final Logger logger = LoggerFactory.getLogger(FightFriends.class);
     private World world;
 
-    private FightFriends(World world){
+    public FightFriends(World world){
         this.world = world;
     }
 
@@ -30,32 +30,6 @@ public class FightFriends {
     public boolean playerIsAlive(){
         //TODO
         return false;
-    }
-
-    public static class Builder {
-        private World world;
-
-        public Builder(){
-        }
-
-        public Builder world(World world){
-            this.world = world;
-            return this;
-        }
-
-        public Builder addCharactersRandomly(List<Character> charactersToAdd){
-            //TODO
-            return this;
-        }
-
-        public Builder addCharacterToArea(String areaName, Character character){
-            //TODO
-            return this;
-        }
-
-        public FightFriends build(){
-            return new FightFriends(world);
-        }
     }
 
 }
