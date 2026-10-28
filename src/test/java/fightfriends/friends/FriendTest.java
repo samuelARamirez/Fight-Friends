@@ -53,4 +53,25 @@ class FriendTest {
         assertEquals("", create("").getName());
         assertNull(create(null).getName());
     }
+
+    @Test
+    void testLevelingUp() {
+        Friend bear = new Bear("Bear");
+        assertEquals(0, bear.getExperiencePoints());
+        assertEquals(1, bear.getLevel());
+        //bear is level 1, so it needs 100 exp to level up
+        assertEquals(100, bear.getExperiencePointsNeededToLevelUp());
+        assertFalse(bear.canLevelUp());
+
+        bear.gainExp(120);
+        assertEquals(120, bear.getExperiencePoints());
+        assertTrue(bear.canLevelUp());
+        bear.levelUp();
+        assertEquals(2, bear.getLevel());
+        assertEquals(20, bear.getExperiencePoints());
+
+        //bear is level 2, so it needs 200 exp to level up
+        assertEquals(200, bear.getExperiencePointsNeededToLevelUp());
+        assertFalse(bear.canLevelUp());
+    }
 }
