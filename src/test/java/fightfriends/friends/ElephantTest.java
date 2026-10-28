@@ -6,6 +6,34 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ElephantTest {
     @Test
+    void startsAtSpecifiedLevelWithBaseStats() {
+        Elephant subject = new Elephant("Leveled", 3);
+
+        assertEquals("Leveled", subject.getName());
+        assertEquals("Elephant", subject.getSpecies());
+        assertEquals(3, subject.getLevel());
+        assertEquals(0, subject.getExperiencePoints());
+        assertEquals(300, subject.getExperiencePointsNeededToLevelUp());
+        assertEquals(180.0, subject.getHealth());
+        assertEquals(8.0, subject.getAttack());
+        assertEquals(2.0, subject.getSpeed());
+    }
+
+    @Test
+    void startsAtSpecifiedLevelWithCustomStats() {
+        Elephant subject = new Elephant("Custom", 125.5, 17.5, 6.5, 4);
+
+        assertEquals("Custom", subject.getName());
+        assertEquals("Elephant", subject.getSpecies());
+        assertEquals(4, subject.getLevel());
+        assertEquals(0, subject.getExperiencePoints());
+        assertEquals(400, subject.getExperiencePointsNeededToLevelUp());
+        assertEquals(125.5, subject.getHealth());
+        assertEquals(17.5, subject.getAttack());
+        assertEquals(6.5, subject.getSpeed());
+    }
+
+    @Test
     void preservesNameAndIdentifiesType() {
         Friend subject = new Elephant("Example", 100.0, 10.0, 5.0);
 

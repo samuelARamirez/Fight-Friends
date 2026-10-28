@@ -17,6 +17,9 @@ public abstract class Friend implements Collectible {
     }
 
     protected Friend(String name, double health, double attack, double speed, int level) {
+        if (level < 1) {
+            throw new IllegalArgumentException("Friend level must be at least 1");
+        }
         this.name = name;
         this.health = health;
         this.attack = attack;

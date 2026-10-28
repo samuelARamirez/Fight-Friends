@@ -10,7 +10,15 @@ public class Wolf extends Friend {
     }
 
     public Wolf(String name, double health, double attack, double speed) {
-        super(name, health, attack, speed);
+        this(name, health, attack, speed, 1);
+    }
+
+    public Wolf(String name, int level) {
+        this(name, BASE_HEALTH, BASE_ATTACK, BASE_SPEED, level);
+    }
+
+    public Wolf(String name, double health, double attack, double speed, int level) {
+        super(name, health, attack, speed, level);
     }
 
     @Override
