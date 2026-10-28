@@ -1,6 +1,6 @@
 package fightfriends.battle;
 
-import fightfriends.friends.Bear;
+import fightfriends.friends.FriendFactory;
 import fightfriends.friends.Friend;
 import fightfriends.strategy.AggressiveStrategy;
 import fightfriends.strategy.DefensiveStrategy;
@@ -16,10 +16,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class BattleTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     @Test
     void successfulUserEscapeEndsTurnAndBattleAsDrawWithoutDamage() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new RunStrategy(new FixedRandom(0.5))),
                 List.of(new AggressiveStrategy()));
@@ -38,8 +40,8 @@ class BattleTest {
 
     @Test
     void successfulEnemyEscapeAlsoEndsBattleWithoutDamage() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new AggressiveStrategy()),
                 List.of(new RunStrategy(new FixedRandom(0.5))));
@@ -54,8 +56,8 @@ class BattleTest {
 
     @Test
     void failedEscapeTakesDoubleModifiedAttackAndAllowsNextTurn() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new RunStrategy(new FixedRandom(0.9)), new NormalStrategy()),
                 List.of(new AggressiveStrategy(), new NormalStrategy()));
@@ -74,8 +76,8 @@ class BattleTest {
 
     @Test
     void failedEnemyEscapeTakesDoubleDamageAndDealsNone() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new NormalStrategy()),
                 List.of(new RunStrategy(new FixedRandom(0.9))));
@@ -90,8 +92,8 @@ class BattleTest {
 
     @Test
     void enemyCanEscapeEvenIfUserEscapeFails() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new RunStrategy(new FixedRandom(0.9))),
                 List.of(new RunStrategy(new FixedRandom(0.5))));
@@ -106,8 +108,8 @@ class BattleTest {
 
     @Test
     void bothFailedEscapesLeaveHealthUnchangedAndBattleContinues() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new RunStrategy(new FixedRandom(0.9))),
                 List.of(new RunStrategy(new FixedRandom(0.9))));
@@ -122,8 +124,8 @@ class BattleTest {
 
     @Test
     void strategiesAffectBothOffenseAndDefenseForOnlyTheirTurn() {
-        Friend user = new Bear("User", 100, 10, 5);
-        Friend enemy = new Bear("Enemy", 100, 10, 5);
+        Friend user = friendFactory.createBear("User", 100, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 100, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new AggressiveStrategy(), new NormalStrategy()),
                 List.of(new DefensiveStrategy(), new NormalStrategy()));
@@ -141,8 +143,8 @@ class BattleTest {
 
     @Test
     void lethalAttacksAreSimultaneousAndHealthStopsAtZero() {
-        Friend user = new Bear("User", 5, 10, 5);
-        Friend enemy = new Bear("Enemy", 5, 10, 5);
+        Friend user = friendFactory.createBear("User", 5, 10, 5);
+        Friend enemy = friendFactory.createBear("Enemy", 5, 10, 5);
         Battle battle = new FixedBattle(user, enemy,
                 List.of(new NormalStrategy()), List.of(new NormalStrategy()));
 
