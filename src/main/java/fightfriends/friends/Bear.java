@@ -10,7 +10,15 @@ public class Bear extends Friend {
     }
 
     public Bear(String name, double health, double attack, double speed) {
-        super(name, health, attack, speed);
+        this(name, health, attack, speed, 1);
+    }
+
+    public Bear(String name, int level) {
+        this(name, BASE_HEALTH, BASE_ATTACK, BASE_SPEED, level);
+    }
+
+    public Bear(String name, double health, double attack, double speed, int level) {
+        super(name, health, attack, speed, level);
     }
 
     @Override

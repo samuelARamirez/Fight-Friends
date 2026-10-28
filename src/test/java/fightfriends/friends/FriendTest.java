@@ -74,4 +74,28 @@ class FriendTest {
         assertEquals(200, bear.getExperiencePointsNeededToLevelUp());
         assertFalse(bear.canLevelUp());
     }
+
+    @Test
+    void constructorRejectsLevelLessThan1() {
+        assertThrows(IllegalArgumentException.class, () -> new Bear("bear",10.0, 10.0, 10.0, 0));
+    }
+
+    @Test
+    void cannotLevelUpWithoutEnoughExperience() {
+        Friend bear = new Bear("Bear");
+
+        assertThrows(IllegalStateException.class, bear::levelUp);
+
+        assertEquals(1, bear.getLevel());
+        assertEquals(0, bear.getExperiencePoints());
+    }
+
+    @Test
+    void rejectsNegativeExperience() {
+        Friend bear = new Bear("Bear");
+
+        assertThrows(IllegalArgumentException.class, () -> bear.gainExp(-1));
+
+        assertEquals(0, bear.getExperiencePoints());
+    }
 }

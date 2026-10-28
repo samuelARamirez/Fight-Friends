@@ -10,7 +10,15 @@ public class Fox extends Friend {
     }
 
     public Fox(String name, double health, double attack, double speed) {
-        super(name, health, attack, speed);
+        this(name, health, attack, speed, 1);
+    }
+
+    public Fox(String name, int level) {
+        this(name, BASE_HEALTH, BASE_ATTACK, BASE_SPEED, level);
+    }
+
+    public Fox(String name, double health, double attack, double speed, int level) {
+        super(name, health, attack, speed, level);
     }
 
     @Override
