@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WolfTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     @Test
     void startsAtSpecifiedLevelWithBaseStats() {
-        Wolf subject = new Wolf("Leveled", 3);
+        Friend subject = friendFactory.createWolf("Leveled", 3);
 
         assertEquals("Leveled", subject.getName());
         assertEquals("Wolf", subject.getSpecies());
@@ -21,7 +23,7 @@ class WolfTest {
 
     @Test
     void startsAtSpecifiedLevelWithCustomStats() {
-        Wolf subject = new Wolf("Custom", 125.5, 17.5, 6.5, 4);
+        Friend subject = friendFactory.createWolf("Custom", 125.5, 17.5, 6.5, 4);
 
         assertEquals("Custom", subject.getName());
         assertEquals("Wolf", subject.getSpecies());
@@ -35,7 +37,7 @@ class WolfTest {
 
     @Test
     void preservesNameAndIdentifiesType() {
-        Friend subject = new Wolf("Example", 100.0, 10.0, 5.0);
+        Friend subject = friendFactory.createWolf("Example", 100.0, 10.0, 5.0);
 
         assertEquals("Example", subject.getName());
         assertEquals("Wolf", subject.getSpecies());
@@ -52,7 +54,7 @@ class WolfTest {
     }
     @Test
     void startsWithAnimalBaseStats() {
-        Wolf subject = new Wolf("Example");
+        Friend subject = friendFactory.createWolf("Example");
         assertEquals("Example", subject.getName());
         assertEquals("Wolf", subject.getSpecies());
         assertEquals(90.0, subject.getHealth());
@@ -62,14 +64,14 @@ class WolfTest {
 
     @Test
     void changingOneFriendDoesNotChangeAnotherOrItsDefaults() {
-        Wolf subject = new Wolf("First");
-        Wolf other = new Wolf("Second");
+        Friend subject = friendFactory.createWolf("First");
+        Friend other = friendFactory.createWolf("Second");
         subject.setHealth(1.0);
         subject.setAttack(1.0);
         subject.setSpeed(1.0);
         assertEquals(90.0, other.getHealth());
         assertEquals(14.0, other.getAttack());
         assertEquals(8.0, other.getSpeed());
-        assertEquals(90.0, new Wolf("Third").getHealth());
+        assertEquals(90.0, friendFactory.createWolf("Third").getHealth());
     }
 }

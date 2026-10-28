@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ElephantTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     @Test
     void startsAtSpecifiedLevelWithBaseStats() {
-        Elephant subject = new Elephant("Leveled", 3);
+        Friend subject = friendFactory.createElephant("Leveled", 3);
 
         assertEquals("Leveled", subject.getName());
         assertEquals("Elephant", subject.getSpecies());
@@ -21,7 +23,7 @@ class ElephantTest {
 
     @Test
     void startsAtSpecifiedLevelWithCustomStats() {
-        Elephant subject = new Elephant("Custom", 125.5, 17.5, 6.5, 4);
+        Friend subject = friendFactory.createElephant("Custom", 125.5, 17.5, 6.5, 4);
 
         assertEquals("Custom", subject.getName());
         assertEquals("Elephant", subject.getSpecies());
@@ -35,7 +37,7 @@ class ElephantTest {
 
     @Test
     void preservesNameAndIdentifiesType() {
-        Friend subject = new Elephant("Example", 100.0, 10.0, 5.0);
+        Friend subject = friendFactory.createElephant("Example", 100.0, 10.0, 5.0);
 
         assertEquals("Example", subject.getName());
         assertEquals("Elephant", subject.getSpecies());
@@ -52,7 +54,7 @@ class ElephantTest {
     }
     @Test
     void startsWithAnimalBaseStats() {
-        Elephant subject = new Elephant("Example");
+        Friend subject = friendFactory.createElephant("Example");
         assertEquals("Example", subject.getName());
         assertEquals("Elephant", subject.getSpecies());
         assertEquals(180.0, subject.getHealth());
@@ -62,14 +64,14 @@ class ElephantTest {
 
     @Test
     void changingOneFriendDoesNotChangeAnotherOrItsDefaults() {
-        Elephant subject = new Elephant("First");
-        Elephant other = new Elephant("Second");
+        Friend subject = friendFactory.createElephant("First");
+        Friend other = friendFactory.createElephant("Second");
         subject.setHealth(1.0);
         subject.setAttack(1.0);
         subject.setSpeed(1.0);
         assertEquals(180.0, other.getHealth());
         assertEquals(8.0, other.getAttack());
         assertEquals(2.0, other.getSpeed());
-        assertEquals(180.0, new Elephant("Third").getHealth());
+        assertEquals(180.0, friendFactory.createElephant("Third").getHealth());
     }
 }

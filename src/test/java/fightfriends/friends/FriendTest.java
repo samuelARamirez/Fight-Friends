@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FriendTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     private Friend create(String name) {
         return new Friend(name, 100.0, 10.0, 5.0) {
             @Override
@@ -56,7 +58,7 @@ class FriendTest {
 
     @Test
     void testLevelingUp() {
-        Friend bear = new Bear("Bear");
+        Friend bear = friendFactory.createBear("Bear");
         assertEquals(0, bear.getExperiencePoints());
         assertEquals(1, bear.getLevel());
         //bear is level 1, so it needs 100 exp to level up
@@ -77,12 +79,12 @@ class FriendTest {
 
     @Test
     void constructorRejectsLevelLessThan1() {
-        assertThrows(IllegalArgumentException.class, () -> new Bear("bear",10.0, 10.0, 10.0, 0));
+        assertThrows(IllegalArgumentException.class, () -> friendFactory.createBear("bear",10.0, 10.0, 10.0, 0));
     }
 
     @Test
     void cannotLevelUpWithoutEnoughExperience() {
-        Friend bear = new Bear("Bear");
+        Friend bear = friendFactory.createBear("Bear");
 
         assertThrows(IllegalStateException.class, bear::levelUp);
 
@@ -92,7 +94,7 @@ class FriendTest {
 
     @Test
     void rejectsNegativeExperience() {
-        Friend bear = new Bear("Bear");
+        Friend bear = friendFactory.createBear("Bear");
 
         assertThrows(IllegalArgumentException.class, () -> bear.gainExp(-1));
 

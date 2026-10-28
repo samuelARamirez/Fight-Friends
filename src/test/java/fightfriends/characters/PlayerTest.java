@@ -1,5 +1,6 @@
 package fightfriends.characters;
 
+import fightfriends.friends.FriendFactory;
 import fightfriends.Collectible;
 import fightfriends.Gold;
 import fightfriends.areas.Area;
@@ -7,8 +8,6 @@ import fightfriends.areas.Desert;
 import fightfriends.areas.Forest;
 import fightfriends.artifacts.Artifact;
 import fightfriends.artifacts.ArtifactFactory;
-import fightfriends.friends.Bear;
-import fightfriends.friends.Fox;
 import fightfriends.friends.Friend;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
 
     private static final  CharacterFactory factory = new CharacterFactory();
     private static final ArtifactFactory artifactFactory = new ArtifactFactory();
@@ -38,8 +39,8 @@ public class PlayerTest {
     @Test
     void carriesDistinctFriendsWithoutRepeatingAnInstance() {
         Player player = (Player)factory.createPlayer("Sam");
-        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
-        Friend otherFox = new Fox("Ember", 100.0, 10.0, 5.0);
+        Friend fox = friendFactory.createFox("Ember", 100.0, 10.0, 5.0);
+        Friend otherFox = friendFactory.createFox("Ember", 100.0, 10.0, 5.0);
         player.addFriend(fox);
         player.addFriend(otherFox);
         player.addFriend(fox);
@@ -49,9 +50,9 @@ public class PlayerTest {
     @Test
     void removesOnlyFriendsThatArePresent() {
         Player player = (Player) factory.createPlayer("Sam");
-        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
+        Friend fox = friendFactory.createFox("Ember", 100.0, 10.0, 5.0);
         player.addFriend(fox);
-        assertFalse(player.removeFriend(new Bear("Bear", 100.0, 10.0, 5.0)));
+        assertFalse(player.removeFriend(friendFactory.createBear("Bear", 100.0, 10.0, 5.0)));
         assertTrue(player.removeFriend(fox));
         assertFalse(player.removeFriend(fox));
         assertTrue(player.getFriends().isEmpty());
@@ -126,7 +127,7 @@ public class PlayerTest {
     @Test
     void returnsImmutableSnapshots() {
         Player player = (Player)factory.createPlayer("Sam");
-        Friend fox = new Fox("Ember", 100.0, 10.0, 5.0);
+        Friend fox = friendFactory.createFox("Ember", 100.0, 10.0, 5.0);
         Area forest = new Forest("Woods");
         player.addFriend(fox);
         player.visitArea(forest);

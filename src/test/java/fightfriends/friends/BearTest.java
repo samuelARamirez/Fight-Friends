@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BearTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     @Test
     void startsAtSpecifiedLevelWithBaseStats() {
-        Bear subject = new Bear("Leveled", 3);
+        Friend subject = friendFactory.createBear("Leveled", 3);
 
         assertEquals("Leveled", subject.getName());
         assertEquals("Bear", subject.getSpecies());
@@ -21,7 +23,7 @@ class BearTest {
 
     @Test
     void startsAtSpecifiedLevelWithCustomStats() {
-        Bear subject = new Bear("Custom", 125.5, 17.5, 6.5, 4);
+        Friend subject = friendFactory.createBear("Custom", 125.5, 17.5, 6.5, 4);
 
         assertEquals("Custom", subject.getName());
         assertEquals("Bear", subject.getSpecies());
@@ -35,7 +37,7 @@ class BearTest {
 
     @Test
     void preservesNameAndIdentifiesType() {
-        Friend subject = new Bear("Example", 100.0, 10.0, 5.0);
+        Friend subject = friendFactory.createBear("Example", 100.0, 10.0, 5.0);
 
         assertEquals("Example", subject.getName());
         assertEquals("Bear", subject.getSpecies());
@@ -52,7 +54,7 @@ class BearTest {
     }
     @Test
     void startsWithAnimalBaseStats() {
-        Bear subject = new Bear("Example");
+        Friend subject = friendFactory.createBear("Example");
         assertEquals("Example", subject.getName());
         assertEquals("Bear", subject.getSpecies());
         assertEquals(120.0, subject.getHealth());
@@ -62,14 +64,14 @@ class BearTest {
 
     @Test
     void changingOneFriendDoesNotChangeAnotherOrItsDefaults() {
-        Bear subject = new Bear("First");
-        Bear other = new Bear("Second");
+        Friend subject = friendFactory.createBear("First");
+        Friend other = friendFactory.createBear("Second");
         subject.setHealth(1.0);
         subject.setAttack(1.0);
         subject.setSpeed(1.0);
         assertEquals(120.0, other.getHealth());
         assertEquals(12.0, other.getAttack());
         assertEquals(5.0, other.getSpeed());
-        assertEquals(120.0, new Bear("Third").getHealth());
+        assertEquals(120.0, friendFactory.createBear("Third").getHealth());
     }
 }

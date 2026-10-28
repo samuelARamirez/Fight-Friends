@@ -5,9 +5,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class FoxTest {
+    private final FriendFactory friendFactory = new FriendFactory();
+
     @Test
     void startsAtSpecifiedLevelWithBaseStats() {
-        Fox subject = new Fox("Leveled", 3);
+        Friend subject = friendFactory.createFox("Leveled", 3);
 
         assertEquals("Leveled", subject.getName());
         assertEquals("Fox", subject.getSpecies());
@@ -21,7 +23,7 @@ class FoxTest {
 
     @Test
     void startsAtSpecifiedLevelWithCustomStats() {
-        Fox subject = new Fox("Custom", 125.5, 17.5, 6.5, 4);
+        Friend subject = friendFactory.createFox("Custom", 125.5, 17.5, 6.5, 4);
 
         assertEquals("Custom", subject.getName());
         assertEquals("Fox", subject.getSpecies());
@@ -35,7 +37,7 @@ class FoxTest {
 
     @Test
     void preservesNameAndIdentifiesType() {
-        Friend subject = new Fox("Example", 100.0, 10.0, 5.0);
+        Friend subject = friendFactory.createFox("Example", 100.0, 10.0, 5.0);
 
         assertEquals("Example", subject.getName());
         assertEquals("Fox", subject.getSpecies());
@@ -52,7 +54,7 @@ class FoxTest {
     }
     @Test
     void startsWithAnimalBaseStats() {
-        Fox subject = new Fox("Example");
+        Friend subject = friendFactory.createFox("Example");
         assertEquals("Example", subject.getName());
         assertEquals("Fox", subject.getSpecies());
         assertEquals(70.0, subject.getHealth());
@@ -62,14 +64,14 @@ class FoxTest {
 
     @Test
     void changingOneFriendDoesNotChangeAnotherOrItsDefaults() {
-        Fox subject = new Fox("First");
-        Fox other = new Fox("Second");
+        Friend subject = friendFactory.createFox("First");
+        Friend other = friendFactory.createFox("Second");
         subject.setHealth(1.0);
         subject.setAttack(1.0);
         subject.setSpeed(1.0);
         assertEquals(70.0, other.getHealth());
         assertEquals(8.0, other.getAttack());
         assertEquals(10.0, other.getSpeed());
-        assertEquals(70.0, new Fox("Third").getHealth());
+        assertEquals(70.0, friendFactory.createFox("Third").getHealth());
     }
 }
