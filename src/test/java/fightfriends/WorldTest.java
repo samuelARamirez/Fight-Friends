@@ -1,14 +1,15 @@
 package fightfriends;
 
+import fightfriends.areas.AreaFactory;
 import fightfriends.areas.Area;
-import fightfriends.areas.Forest;
-import fightfriends.areas.Desert;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorldTest {
+    private final AreaFactory areaFactory = new AreaFactory();
+
     @Test
     void startsEmpty() {
         assertTrue(new World().getAreas().isEmpty());
@@ -17,8 +18,8 @@ class WorldTest {
     @Test
     void keepsDistinctAreasInInsertionOrderWithoutRepeatingAnInstance() {
         World world = new World();
-        Area forest = new Forest("Woods");
-        Area otherForest = new Forest("Woods");
+        Area forest = areaFactory.createForest("Woods");
+        Area otherForest = areaFactory.createForest("Woods");
         world.addArea(forest);
         world.addArea(otherForest);
         world.addArea(forest);
@@ -28,9 +29,9 @@ class WorldTest {
     @Test
     void removesOnlyAreasThatArePresent() {
         World world = new World();
-        Area forest = new Forest("Woods");
+        Area forest = areaFactory.createForest("Woods");
         world.addArea(forest);
-        assertFalse(world.removeArea(new Desert("Dunes")));
+        assertFalse(world.removeArea(areaFactory.createDesert("Dunes")));
         assertTrue(world.removeArea(forest));
         assertFalse(world.removeArea(forest));
         assertTrue(world.getAreas().isEmpty());
@@ -39,7 +40,7 @@ class WorldTest {
     @Test
     void returnsAnImmutableSnapshot() {
         World world = new World();
-        Area forest = new Forest("Woods");
+        Area forest = areaFactory.createForest("Woods");
         world.addArea(forest);
         List<Area> snapshot = world.getAreas();
         assertThrows(UnsupportedOperationException.class, snapshot::clear);

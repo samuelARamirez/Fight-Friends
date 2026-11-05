@@ -1,9 +1,8 @@
 package fightfriends.stepdefs;
 
+import fightfriends.areas.AreaFactory;
 import fightfriends.World;
 import fightfriends.areas.Area;
-import fightfriends.areas.Forest;
-import fightfriends.areas.Desert;
 import fightfriends.characters.Player;
 import fightfriends.characters.CharacterFactory;
 import io.cucumber.java.en.Given;
@@ -15,6 +14,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WorldStepDefs {
+    private final AreaFactory areaFactory = new AreaFactory();
+
     private final CharacterFactory characterFactory = new CharacterFactory();
 
     private World.Builder builder;
@@ -25,7 +26,7 @@ public class WorldStepDefs {
     @Given("a forest next to a desert")
     public void createWorld() {
         builder = new World.Builder().createGridOfAreas(1, 2,
-                List.of(new Forest("Forest"), new Desert("Desert")));
+                List.of(areaFactory.createForest("Forest"), areaFactory.createDesert("Desert")));
     }
 
     @Given("a player named {string} starts at {int}, {int}")

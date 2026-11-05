@@ -1,6 +1,5 @@
 package fightfriends;
 
-import fightfriends.areas.Forest;
 import fightfriends.friends.Fox;
 import fightfriends.characters.Trainer;
 import fightfriends.characters.Character;
