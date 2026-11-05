@@ -17,7 +17,7 @@ Fight-Friends/
     │   │   ├── Gold.java
     │   │   ├── characters/            # Character, Trainer, Player, Merchant, CharacterFactory
     │   │   ├── friends/               # Friend, Bear, Elephant, Fox, Wolf
-    │   │   ├── areas/                 # Area, Forest, Desert, Tundra
+    │   │   ├── areas/                 # Area, Forest, Desert, Tundra, AreaFactory
     │   │   └── artifacts/             # Artifact, Food, FriendPotion, ArtifactFactory
     │   └── resources/logback.xml
     └── test/
@@ -40,7 +40,8 @@ Fight-Friends/
 
 #### Factory Pattern
 
-We use `CharacterFactory` and `ArtifactFactory` to create characters and artifacts.
+We use `CharacterFactory`, `ArtifactFactory`, and `AreaFactory` to create characters,
+artifacts, and areas. `AreaFactory` returns the `Area` abstraction for each biome.
 These factories handle construction and randomized defaults so the rest of the
 game can work with the `Character` and `Artifact` abstractions.
 

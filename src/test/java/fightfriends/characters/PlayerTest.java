@@ -1,11 +1,10 @@
 package fightfriends.characters;
 
+import fightfriends.areas.AreaFactory;
 import fightfriends.friends.FriendFactory;
 import fightfriends.Collectible;
 import fightfriends.Gold;
 import fightfriends.areas.Area;
-import fightfriends.areas.Desert;
-import fightfriends.areas.Forest;
 import fightfriends.artifacts.Artifact;
 import fightfriends.artifacts.ArtifactFactory;
 import fightfriends.friends.Friend;
@@ -22,6 +21,8 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PlayerTest {
+    private final AreaFactory areaFactory = new AreaFactory();
+
     private final FriendFactory friendFactory = new FriendFactory();
 
 
@@ -111,9 +112,9 @@ public class PlayerTest {
     @Test
     void remembersUniqueVisitsInOrder() {
         Player player = (Player)factory.createPlayer("Sam");
-        Area forest = new Forest("Woods");
-        Area desert = new Desert("Dunes");
-        Area otherForest = new Forest("Woods");
+        Area forest = areaFactory.createForest("Woods");
+        Area desert = areaFactory.createDesert("Dunes");
+        Area otherForest = areaFactory.createForest("Woods");
         assertFalse(player.hasVisited(forest));
         player.visitArea(forest);
         player.visitArea(desert);
@@ -128,7 +129,7 @@ public class PlayerTest {
     void returnsImmutableSnapshots() {
         Player player = (Player)factory.createPlayer("Sam");
         Friend fox = friendFactory.createFox("Ember", 100.0, 10.0, 5.0);
-        Area forest = new Forest("Woods");
+        Area forest = areaFactory.createForest("Woods");
         player.addFriend(fox);
         player.visitArea(forest);
         List<Friend> friends = player.getFriends();
@@ -136,7 +137,7 @@ public class PlayerTest {
         assertThrows(UnsupportedOperationException.class, friends::clear);
         assertThrows(UnsupportedOperationException.class, visits::clear);
         player.removeFriend(fox);
-        player.visitArea(new Desert("Dunes"));
+        player.visitArea(areaFactory.createDesert("Dunes"));
         assertEquals(List.of(fox), friends);
         assertEquals(List.of(forest), visits);
         assertTrue(player.getFriends().isEmpty());

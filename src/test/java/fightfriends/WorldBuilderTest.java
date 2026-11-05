@@ -1,8 +1,7 @@
 package fightfriends;
 
 import fightfriends.areas.Area;
-import fightfriends.areas.Forest;
-import fightfriends.areas.Desert;
+import fightfriends.areas.AreaFactory;
 import fightfriends.characters.Player;
 import fightfriends.characters.CharacterFactory;
 import fightfriends.characters.Trainer;
@@ -12,11 +11,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WorldBuilderTest {
     private final CharacterFactory characterFactory = new CharacterFactory();
+    private final AreaFactory areaFactory = new AreaFactory();
 
     private World.Builder grid() {
-        return new World.Builder().createGridOfAreas(2, 2, List.of(
-                new Forest("Home"), new Desert("East"),
-                new Forest("South"), new Desert("Southeast")));
+        return new World.Builder().createGridOfAreas(2, 2,
+                List.of(areaFactory.createForest("Home"),
+                areaFactory.createDesert("East"),
+                areaFactory.createForest("South"),
+                areaFactory.createDesert("Southeast")));
     }
 
     @Test
@@ -62,7 +64,7 @@ class WorldBuilderTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new World.Builder().createGridOfAreas(0, 1, List.of()));
         assertThrows(IllegalArgumentException.class,
-                () -> new World.Builder().createGridOfAreas(2, 2, List.of(new Forest("Home"))));
+                () -> new World.Builder().createGridOfAreas(2, 2, List.of(areaFactory.createForest("Home"))));
         assertThrows(IllegalArgumentException.class,
                 () -> grid().addPlayerAtXY(-1, 0, (Player) characterFactory.createPlayer("Sam")));
         assertThrows(IllegalArgumentException.class,
@@ -83,7 +85,7 @@ class WorldBuilderTest {
         World.Builder builder = grid().addPlayer(player);
         World world = builder.build();
         builder.addPlayerAtXY(1, 1, player);
-        builder.createGridOfAreas(1, 1, List.of(new Forest("Replacement")));
+        builder.createGridOfAreas(1, 1, List.of(areaFactory.createForest("Replacement")));
         assertEquals(4, world.getAreas().size());
         assertEquals(0, world.findLocationOf(player).xPos());
         assertEquals(0, world.findLocationOf(player).yPos());
