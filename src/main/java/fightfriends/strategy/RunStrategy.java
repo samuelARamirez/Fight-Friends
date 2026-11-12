@@ -7,10 +7,6 @@ public class RunStrategy implements BattleStrategy {
 
     private final Random random;
 
-    public RunStrategy() {
-        this(new Random());
-    }
-
     public RunStrategy(Random random) {
         this.random = random;
     }
