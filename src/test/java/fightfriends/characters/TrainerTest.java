@@ -46,4 +46,23 @@ public class TrainerTest {
         assertFalse(trainer.removeFriend(fox));
         assertTrue(trainer.getFriends().isEmpty());
     }
+
+    @Test
+    void testHealthLoss() {
+        Trainer trainer = (Trainer) factory.createTrainer("Sam");
+        double health = trainer.getHealthPoints();
+        assertTrue(trainer.isAlive());
+        assertEquals(health - 2, trainer.loseHealth(2));
+        assertEquals(health - 2, trainer.getHealthPoints());
+        assertTrue(trainer.isAlive());
+    }
+
+    @Test
+    void testHealthCannotGoBelowZero() {
+        Trainer trainer = (Trainer) factory.createTrainer("Sam");
+        assertEquals(0, trainer.loseHealth(trainer.getHealthPoints() + 5));
+        assertEquals(0, trainer.getHealthPoints());
+        assertFalse(trainer.isAlive());
+        assertEquals(0, trainer.loseHealth(1));
+    }
 }

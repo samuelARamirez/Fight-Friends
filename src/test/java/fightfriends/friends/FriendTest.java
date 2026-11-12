@@ -100,4 +100,10 @@ class FriendTest {
 
         assertEquals(0, bear.getExperiencePoints());
     }
+
+    @Test void testPowerNumber() {
+        Friend bear = friendFactory.createBear("Bear");
+        double calculatedPower = bear.getAttack() + bear.getHealth() + bear.getSpeed();
+        assertEquals(calculatedPower, bear.getPower());
+    }
 }

@@ -31,4 +31,12 @@ public class MerchantTest {
         assertFalse(merchant.viewItemsForSale().contains(firstItem));
 
     }
+
+    @Test
+    void testEmptyMerchant() {
+        Merchant merchant = new Merchant("Empty shop");
+        assertEquals("Empty shop", merchant.getName());
+        assertTrue(merchant.viewItemsForSale().isEmpty());
+        assertTrue(merchant.isMerchant());
+    }
 }

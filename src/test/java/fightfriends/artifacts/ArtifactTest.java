@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ArtifactTest {
     private static final ArtifactFactory factory = new ArtifactFactory();
@@ -45,5 +46,32 @@ public class ArtifactTest {
         List<Artifact> potions = factory.createNPotions(N_POTIONS);
 
         assertEquals(N_POTIONS, potions.size());
+    }
+
+    @Test
+    void testFoodPower() {
+        Artifact food = factory.createFood("Bread", 3.5);
+        assertEquals(3.5, food.getPower());
+    }
+
+    @Test
+    void testPotionPower() {
+        Artifact potion = factory.createPotion("Potion", 3.5, 2.0);
+        assertEquals(5.5, potion.getPower());
+    }
+
+    @Test
+    void testFoodDescriptionIncludesNameAndNutrition() {
+        Artifact food = factory.createFood("Bread", 3.5);
+        assertTrue(food.toString().contains("Bread"));
+        assertTrue(food.toString().contains(String.format("%.2f", 3.5)));
+    }
+
+    @Test
+    void testPotionDescriptionIncludesNameAndStats() {
+        Artifact potion = factory.createPotion("Potion", 3.5, 2.0);
+        assertTrue(potion.toString().contains("Potion"));
+        assertTrue(potion.toString().contains(String.format("%.2f", 3.5)));
+        assertTrue(potion.toString().contains(String.format("%.2f", 2.0)));
     }
 }

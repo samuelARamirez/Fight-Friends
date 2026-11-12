@@ -1,6 +1,7 @@
 package fightfriends.characters;
 
 import fightfriends.Collectible;
+import fightfriends.Gold;
 import fightfriends.areas.Area;
 import fightfriends.artifacts.Artifact;
 import fightfriends.friends.Friend;
@@ -79,11 +80,35 @@ public class Player extends Trainer{
      * @return true if successful
      */
     public boolean pickup(Collectible something){
-        //TODO: sort by coins, artifacts, and friends
-        //if coin: add to balance
-        // if artifacts: add to backpack
-        // if friend: add to friends
+        if (Gold.class.isInstance(something)) {
+            return pickupGold(Gold.class.cast(something));
+        }
+        if (Artifact.class.isInstance(something)) {
+            return pickupArtifact(Artifact.class.cast(something));
+        }
+        if (Friend.class.isInstance(something)) {
+            return pickupFriend(Friend.class.cast(something));
+        }
         return false;
+    }
+
+    private boolean pickupGold(Gold gold) {
+        goldBalance += gold.getAmount();
+        return true;
+    }
+
+    private boolean pickupArtifact(Artifact artifact) {
+        if (!backpackHasRoom() || backpack.contains(artifact)) {
+            return false;
+        }
+        backpack.add(artifact);
+        return true;
+    }
+
+    private boolean pickupFriend(Friend friend) {
+        int previousSize = getFriends().size();
+        addFriend(friend);
+        return getFriends().size() > previousSize;
     }
 
     /**
@@ -110,7 +135,7 @@ public class Player extends Trainer{
             return true;
         }else{
             merchant.returnItem(purchasedItem, itemPrice);
-            logger.info("Could not purchase "+purchasedItem.getName()+" because backpack is too small");
+            logger.info("Could not purchase "+purchasedItem.getName()+" because inventory could not accept it");
             //TODO: add in a choice of returning the item, using the item, purchasing more backpack spae, or dropping/consuming something out of the backpack
             return false;
         }
