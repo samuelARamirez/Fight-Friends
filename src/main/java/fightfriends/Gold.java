@@ -25,6 +25,10 @@ public class Gold implements Collectible{
         return String.format("%s ($%.2f)", name, goldAmt);
     }
 
+    public double getAmount(){
+        return goldAmt;
+    }
+
     public double getPower(){
         return goldAmt*GOLD_TO_POWER;
     }
