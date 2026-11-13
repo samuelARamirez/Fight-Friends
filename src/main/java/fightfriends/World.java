@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class World {
     private final List<List<Area>> areas;
@@ -55,22 +56,45 @@ public class World {
         return List.copyOf(characters);
     }
 
-    public boolean movePlayer(Player player, int x, int y) {
-        return movePlayer(player, new Position(x, y));
+    // The map is the only stored source for both the player and character locations.
+    public Player getPlayer() {
+        for (Character character : charactersToPositions.keySet()) {
+            if (Player.class.isInstance(character)) {
+                return Player.class.cast(character);
+            }
+        }
+        return null;
     }
 
-    public boolean movePlayer(Player player, Position destination) {
+    public Area getPlayerArea() {
+        return getAreaAt(findLocationOf(getPlayer()));
+    }
+
+    public boolean movePlayer(int x, int y) {
+        Player player = getPlayer();
         Position current = findLocationOf(player);
-        if (current == null || getAreaAt(destination) == null) {
+        Area destination = getAreaAt(x, y);
+        if (current == null || destination == null) {
             return false;
         }
-        int distance = Math.abs(destination.xPos() - current.xPos())
-                + Math.abs(destination.yPos() - current.yPos());
+        int distance = Math.abs(x - current.xPos()) + Math.abs(y - current.yPos());
         if (distance != 1) {
             return false;
         }
-        charactersToPositions.put(player, destination);
-        player.visitArea(getAreaAt(destination));
+        charactersToPositions.put(player, new Position(x, y));
+        player.visitArea(destination);
+        return true;
+    }
+
+    public boolean pickup(Collectible item) {
+        Area area = getPlayerArea();
+        if (area == null || !area.getCollectibles().contains(item)) {
+            return false;
+        }
+        if (!getPlayer().pickup(item)) {
+            return false;
+        }
+        area.removeCollectible(item);
         return true;
     }
 
@@ -174,12 +198,23 @@ public class World {
         }
 
         public Builder distributeCollectiblesRandomly(List<Collectible> collectibles){
-            //TODO
+            if (areas.isEmpty()) {
+                throw new IllegalStateException("Create the areas before placing collectibles");
+            }
+            Random random = new Random();
+            for (Collectible item : collectibles) {
+                int y = random.nextInt(areas.size());
+                int x = random.nextInt(areas.get(y).size());
+                addCollectibleAtXY(x, y, item);
+            }
             return this;
         }
 
         public Builder addCollectibleAtXY(int x, int y, Collectible thingToAdd){
-            //TODO
+            if (y < 0 || y >= areas.size() || x < 0 || x >= areas.get(y).size()) {
+                throw new IllegalArgumentException("Collectible position is outside the world");
+            }
+            areas.get(y).get(x).addCollectible(thingToAdd);
             return this;
         }
 
@@ -198,11 +233,9 @@ public class World {
             if (areas.isEmpty()) {
                 throw new IllegalStateException("A world needs at least one area");
             }
-            Player player = null;
             int playerCount = 0;
             for (Character character : charactersToPositions.keySet()) {
-                if (character instanceof Player) {
-                    player = (Player) character;
+                if (Player.class.isInstance(character)) {
                     playerCount++;
                 }
             }
@@ -214,7 +247,7 @@ public class World {
                 copiedAreas.add(new ArrayList<>(row));
             }
             World world = new World(copiedAreas, new HashMap<>(charactersToPositions));
-            player.visitArea(world.getAreaAt(world.findLocationOf(player)));
+            world.getPlayer().visitArea(world.getPlayerArea());
             return world;
         }
     }

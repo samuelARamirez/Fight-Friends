@@ -38,9 +38,9 @@ class WorldBuilderTest {
     void movesVerticallyAndBackWithoutRepeatingVisits() {
         Player player = (Player) characterFactory.createPlayer("Sam");
         World world = grid().addPlayer(player).build();
-        assertTrue(world.movePlayer(player, 0, 1));
+        assertTrue(world.movePlayer(0, 1));
         assertFalse(world.getCharactersAt(0, 0).contains(player));
-        assertTrue(world.movePlayer(player, 0, 0));
+        assertTrue(world.movePlayer(0, 0));
         assertEquals(2, player.getVisitedAreas().size());
     }
 
@@ -48,12 +48,11 @@ class WorldBuilderTest {
     void rejectsDiagonalStationaryAndOutOfBoundsMoves() {
         Player player = (Player) characterFactory.createPlayer("Sam");
         World world = grid().addPlayer(player).build();
-        assertFalse(world.movePlayer(player, 1, 1));
-        assertFalse(world.movePlayer(player, 0, 0));
-        assertFalse(world.movePlayer(player, 2, 0));
-        assertFalse(world.movePlayer(player, 0, -1));
-        assertFalse(world.movePlayer(player, 0, 2));
-        assertFalse(world.movePlayer((Player) characterFactory.createPlayer("Other"), 1, 0));
+        assertFalse(world.movePlayer(1, 1));
+        assertFalse(world.movePlayer(0, 0));
+        assertFalse(world.movePlayer(2, 0));
+        assertFalse(world.movePlayer(0, -1));
+        assertFalse(world.movePlayer(0, 2));
         assertEquals(0, world.findLocationOf(player).xPos());
         assertEquals(0, world.findLocationOf(player).yPos());
         assertEquals(1, player.getVisitedAreas().size());

@@ -162,3 +162,18 @@ Use `new Fox("Ember")` for the species defaults. Public `BASE_HEALTH`,
 `BASE_ATTACK`, and `BASE_SPEED` constants live in each animal class.
 Custom constructors and inherited setters still allow individual stats.
 These are starting values for playtesting; combat rules will determine balance.
+
+## World and inventory ownership
+
+`World` owns the character-position map. Its single player is obtained through
+`getPlayer()`, and `getPlayerArea()` derives the current area from that map.
+Use `world.movePlayer(x, y)`; the game does not store a separate player location.
+The player's visited-area history records past visits, not current location.
+
+Each `Area` owns its collectibles, with `addCollectible`, `removeCollectible`,
+and a read-only `getCollectibles()` snapshot. The builder's
+`addCollectibleAtXY` and `distributeCollectiblesRandomly` place items in areas.
+Use `world.pickup(item)` during exploration: it checks the current area, delegates
+to the player's inventory rules, and removes the item only if pickup succeeds.
+Merchant purchases still call `Player.pickup` directly because merchant stock
+is separate from items lying in an area.

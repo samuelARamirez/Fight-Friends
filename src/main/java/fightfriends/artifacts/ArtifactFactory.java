@@ -1,5 +1,8 @@
 package fightfriends.artifacts;
 
+import fightfriends.Collectible;
+import fightfriends.Gold;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -60,6 +63,10 @@ public class ArtifactFactory {
 
     private String getRandomPotionName(){
         return potionNames[rand.nextInt(0, potionNames.length)];
+    }
+
+    public Collectible createGold(String name, double amount){
+        return new Gold(name, amount);
     }
 
     public Artifact createFood(String name, double healthValue){

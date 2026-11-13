@@ -37,7 +37,7 @@ public class WorldStepDefs {
 
     @When("the player moves to {int}, {int}")
     public void movePlayer(int x, int y) {
-        moveSucceeded = world.movePlayer(player, x, y);
+        moveSucceeded = world.movePlayer(x, y);
     }
 
     @Then("the player is at {int}, {int}")
