@@ -27,8 +27,7 @@ public class FightFriends {
     }
 
     public boolean playerIsAlive(){
-        //TODO
-        return false;
+        return world.getPlayer() != null && world.getPlayer().isAlive();
     }
 
 }
