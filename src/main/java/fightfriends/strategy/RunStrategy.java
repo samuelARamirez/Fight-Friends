@@ -25,4 +25,8 @@ public class RunStrategy implements BattleStrategy {
     public double incomingDamage(double attackDamage) {
         return attackDamage * RUN_INCOMING_DAMAGE_MODIFIER;
     }
+    @Override
+    public String toString() {
+        return "Run";
+    }
 }

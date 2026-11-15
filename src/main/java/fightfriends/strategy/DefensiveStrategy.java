@@ -11,4 +11,8 @@ public class DefensiveStrategy implements BattleStrategy {
     public double incomingDamage(double attackDamage) {
         return attackDamage * DEFENSIVE_INCOMING_DAMAGE_MODIFIER;
     }
+    @Override
+    public String toString() {
+        return "Defensive";
+    }
 }

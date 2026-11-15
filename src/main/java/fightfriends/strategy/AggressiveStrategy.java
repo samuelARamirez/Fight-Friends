@@ -11,4 +11,8 @@ public class AggressiveStrategy implements BattleStrategy {
     public double incomingDamage(double attackDamage) {
         return attackDamage * AGGRESSIVE_INCOMING_DAMAGE_MODIFIER;
     }
+    @Override
+    public String toString() {
+        return "Aggressive";
+    }
 }
