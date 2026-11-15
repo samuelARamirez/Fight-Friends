@@ -60,9 +60,12 @@ overall sequence. Strategies will choose actions within that sequence.
 
 #### Observer Pattern
 
-We plan to publish game events to listeners that update the UI. Separate listeners
-will handle display changes, such as health and inventory, and informational text,
-such as battle messages. This keeps UI updates separate from the game logic.
+`Battle` implements the shared `Subject` interface with `attach`, `detach`, and
+`notifyObservers`. Listeners implement `Observer.update(String event)`, so other
+game subjects can reuse the same observer interface. `ConsoleObserver` displays battle starts, turns,
+health changes, escapes, and results through Logback. Observers belong to each
+battle, so separate battles do not share listeners. Future UI listeners can use
+the same interface; broader inventory and display events are still planned.
 
 ### Foundational classes and real logic — 3 points
 
