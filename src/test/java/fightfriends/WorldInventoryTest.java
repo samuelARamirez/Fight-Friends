@@ -2,6 +2,7 @@ package fightfriends;
 
 import fightfriends.areas.Area;
 import fightfriends.areas.AreaFactory;
+import fightfriends.artifacts.Artifact;
 import fightfriends.artifacts.ArtifactFactory;
 import fightfriends.characters.CharacterFactory;
 import fightfriends.characters.Player;
@@ -64,7 +65,7 @@ class WorldInventoryTest {
         World world = builder(player).addCollectibleAtXY(0, 0, extra).build();
         assertFalse(world.pickup(extra));
         assertEquals(List.of(extra), world.getPlayerArea().getCollectibles());
-        player.increaseBackpackSpace(1);
+        player.getBackpack().increaseCapacity(1);
         assertTrue(world.pickup(extra));
         assertTrue(player.getBackpack().contains(extra));
         assertTrue(world.getPlayerArea().getCollectibles().isEmpty());
