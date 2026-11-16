@@ -1,5 +1,8 @@
 package fightfriends.artifacts;
 
+import fightfriends.Die;
+import fightfriends.RandomDie;
+
 import fightfriends.Collectible;
 import fightfriends.Gold;
 
@@ -99,5 +102,12 @@ public class ArtifactFactory {
             potions.add(createPotion());
         }
         return potions;
+    }
+
+    public Leash createLeash(String name, double capturePower) {
+        return createLeash(name, capturePower, RandomDie.hundredSided());
+    }
+    public Leash createLeash(String name, double capturePower, Die die) {
+        return new Leash(name, capturePower, die);
     }
 }
