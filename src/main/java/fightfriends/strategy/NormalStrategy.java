@@ -10,4 +10,8 @@ public class NormalStrategy implements BattleStrategy {
     public double incomingDamage(double attackDamage) {
         return attackDamage;
     }
+    @Override
+    public String toString() {
+        return "Normal";
+    }
 }
