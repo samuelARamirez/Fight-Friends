@@ -9,11 +9,6 @@ public class Leash extends Artifact {
     private final double capturePower;
     private final Die die;
 
-    public Leash(String name, double capturePower) {
-        this(name, capturePower, RandomDie.hundredSided());
-    }
-
-    // The injected die must roll values from 1 through 100.
     public Leash(String name, double capturePower, Die die) {
         super(name);
         this.capturePower = capturePower;
