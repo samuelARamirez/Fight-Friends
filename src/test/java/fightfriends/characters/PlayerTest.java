@@ -78,11 +78,11 @@ public class PlayerTest {
         }
         Artifact extra = artifactFactory.createFood("Extra", 1);
         assertFalse(player.pickup(extra));
-        assertEquals(5, player.getBackpack().size());
-        player.increaseBackpackSpace(1);
+        assertEquals(5, player.getBackpack().getNumItemsInBackpack());
+        player.getBackpack().increaseCapacity(1);
         assertTrue(player.pickup(extra));
         assertFalse(player.pickup(extra));
-        assertEquals(6, player.getBackpack().size());
+        assertEquals(6, player.getBackpack().getNumItemsInBackpack());
     }
 
     @Test
@@ -163,7 +163,7 @@ public class PlayerTest {
         }
         assertTrue(player.pickup(new Gold("Coins", 12.5)));
         assertEquals(balance + 12.5, player.getGoldBalance());
-        assertEquals(5, player.getBackpack().size());
+        assertEquals(5, player.getBackpack().getNumItemsInBackpack());
     }
 
     @Test
@@ -176,7 +176,7 @@ public class PlayerTest {
         assertTrue(player.pickup(friendFactory.createFox("Third", 100, 10, 5)));
         assertFalse(player.pickup(friendFactory.createFox("Fourth", 100, 10, 5)));
         assertEquals(3, player.getFriends().size());
-        assertTrue(player.getBackpack().isEmpty());
+        assertTrue(player.getBackpack().getItems().isEmpty());
     }
 
     @Test
@@ -208,6 +208,6 @@ public class PlayerTest {
         assertFalse(player.purchaseItem(merchant, "Bread"));
         assertEquals(balance, player.getGoldBalance());
         assertTrue(merchant.viewItemsForSale().contains(bread));
-        assertTrue(player.getBackpack().isEmpty());
+        assertTrue(player.getBackpack().getItems().isEmpty());
     }
 }

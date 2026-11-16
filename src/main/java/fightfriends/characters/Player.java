@@ -1,5 +1,6 @@
 package fightfriends.characters;
 
+import fightfriends.Backpack;
 import fightfriends.Collectible;
 import fightfriends.Gold;
 import fightfriends.areas.Area;
@@ -16,11 +17,9 @@ import java.util.Set;
 public class Player extends Trainer{
     private static final Logger logger  = LoggerFactory.getLogger(fightfriends.characters.Player.class);
     private final Set<Area> visitedAreas = new LinkedHashSet<>();
-    private int maxNumArtifacts;
-    private final List<Artifact> backpack;
+    private final Backpack backpack;
     private double goldBalance;
 
-    private static final int DEFAULT_MAX_NUM_ARTIFACTS = 5;
     private static final double DEFAULT_INITIAL_BALANCE = 100.0;
 
     public Player(String name){
@@ -28,14 +27,12 @@ public class Player extends Trainer{
             DEFAULT_HP,
             new ArrayList<>(DEFAULT_MAX_NUM_FRIENDS),
             DEFAULT_MAX_NUM_FRIENDS,
-            DEFAULT_MAX_NUM_ARTIFACTS,
-            new ArrayList<>(DEFAULT_MAX_NUM_ARTIFACTS),
+            new Backpack(),
             DEFAULT_INITIAL_BALANCE);
     }
 
-    public Player(String name, double health_points, List<Friend> friends, int maxNumFriends, int maxNumArtifacts, List<Artifact> backpack, double goldBalance){
+    public Player(String name, double health_points, List<Friend> friends, int maxNumFriends, Backpack backpack, double goldBalance){
         super(name, health_points, friends, maxNumFriends);
-        this.maxNumArtifacts = maxNumArtifacts;
         this.goldBalance = goldBalance;
         this.backpack = backpack;
     }
@@ -52,7 +49,7 @@ public class Player extends Trainer{
         return this.goldBalance;
     }
 
-    public List<Artifact> getBackpack(){
+    public Backpack getBackpack(){
         return this.backpack;
     }
 
@@ -64,14 +61,6 @@ public class Player extends Trainer{
     public void spendMoney(double amount){
         goldBalance -= amount;
         // intentionally allowing negative balance for now
-    }
-
-    private boolean backpackHasRoom(){
-        return backpack.size() < maxNumArtifacts;
-    }
-
-    public void increaseBackpackSpace(int nNewSlots){
-        maxNumArtifacts += nNewSlots;
     }
 
     /**
@@ -98,7 +87,7 @@ public class Player extends Trainer{
     }
 
     private boolean pickupArtifact(Artifact artifact) {
-        if (!backpackHasRoom() || backpack.contains(artifact)) {
+        if (!backpack.hasRoom() || backpack.contains(artifact)) {
             return false;
         }
         backpack.add(artifact);
